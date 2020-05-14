@@ -56,17 +56,3 @@ int main(int argc, char **argv)
 	c->SaveAs("depth_vs_att.png");
 
 }//close the main program
-
-
-
-
-
-
-
-
-
-
-
-
-
-
