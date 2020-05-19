@@ -20,8 +20,6 @@ int main(int argc, char **argv)
 {
 
 	Settings *settings = new Settings();
-	string setupfile = "setup.txt";
-	// settings->ReadFile(setupfile);
 	settings->NOFZ=1; //yes, variable depth index of refraction
 	settings -> RAY_TRACE_ICE_MODEL_PARAMS=0; //use AraSim original default
 
