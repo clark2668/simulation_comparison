@@ -99,6 +99,7 @@ int main(int argc, char **argv)
 		int num_solutions = outputs[0].size();
 		printf("Num solutions: %d \n",num_solutions);
 		for(int sol=0; sol<num_solutions; sol++){
+			// compute the attenuation factor by looping over the ray steps
 			double atten_factor=1.;
 			for(int step=1; step< (int) RayStep[sol][0].size(); step++){
 				double dx = RayStep[sol][0][step - 1] - RayStep[sol][0][step];
