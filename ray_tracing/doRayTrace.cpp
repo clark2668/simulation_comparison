@@ -45,12 +45,11 @@ int main(int argc, char **argv)
 	*/
 
 	vector < vector <double> > outputs;
-	source.SetXYZ(478.,0.,-149.); //also need to reset these variables
-	target.SetXYZ(635.,0.,-5.);
-	int num_solutions=0;
+	source.SetXYZ(647.72309225,  2946.93430118, -1777.57697991); //also need to reset these variables
+	target.SetXYZ(0, 0, -100);
 	raysolver->Solve_Ray_org(source, target, outputs, settings);
 	if(outputs.size()>0){
-		num_solutions = outputs[0].size();
+		int num_solutions = outputs[0].size();
 		printf("Num solutions: %d \n",num_solutions);
 		for(int sol=0; sol<num_solutions; sol++){
 			printf("Solution %d, path length %.3f, launch angle %.3f, receipt angle %.3f \n",
@@ -90,26 +89,30 @@ int main(int argc, char **argv)
 
 	source.SetXYZ(0.,0.,0.);
 	double offset_depth = ice->Surface(source.Lon(), source.Lat());
-	source.SetXYZ(478.,0.,-149.+offset_depth);
-	target.SetXYZ(635.,0.,-5.+offset_depth);
+	source.SetXYZ(647.72309225,  2946.93430118, -1777.57697991+offset_depth);
+	target.SetXYZ(0, 0, -100+offset_depth);
 
 	vector < vector < vector <double> > > RayStep;
 	outputs.clear(); // clear this out in preparation for the second "flavor" of ray tracer call
-	num_solutions=0; // reset the number of solutions also
 	raysolver->Solve_Ray(source, target, ice, outputs, settings, RayStep);
 	if(outputs.size()>0){
-		num_solutions = outputs[0].size();
+		int num_solutions = outputs[0].size();
 		printf("Num solutions: %d \n",num_solutions);
 		for(int sol=0; sol<num_solutions; sol++){
-			printf("Solution %d, path length %.3f, launch angle %.3f, receipt angle %.3f \n",
+			double atten_factor=1.;
+			for(int step=1; step< (int) RayStep[sol][0].size(); step++){
+				double dx = RayStep[sol][0][step - 1] - RayStep[sol][0][step];
+				double dz = RayStep[sol][1][step - 1] - RayStep[sol][1][step];
+				double dl = sqrt((dx * dx) + (dz * dz));
+				atten_factor *= exp(-dl/ice->GetARAIceAttenuLength(-RayStep[sol][1][step]));
+			}
+			printf("Solution %d, path length %.3f, launch angle %.3f, receipt angle %.3f, atten %.4f \n",
 				sol,
 				outputs[0][sol],
 				180. - (outputs[1][sol]*TMath::RadToDeg()),
-				180. - (outputs[2][sol])*TMath::RadToDeg());
-		}		
+				180. - (outputs[2][sol])*TMath::RadToDeg(),
+				atten_factor);
+		}	
 	}
-
-
-
 
 }   //end main
