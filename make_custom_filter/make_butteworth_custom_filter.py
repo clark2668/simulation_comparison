@@ -25,10 +25,10 @@ phase = np.angle(filt)
 unwrap = np.unwrap(phase)
 
 
-filename = "custom_filter.csv.butterworth.txt"
+filename = "rnog_amp_filters.txt"
 file = open(filename,"w")
 for x in range(len(data['freq'])):
- 	to_write='%.2f, %.3f,\n'%(data['freq'][x],gain[x])
+ 	to_write='%.2f, %.3f, %.3f\n'%(data['freq'][x],gain[x], phase[x])
  	file.write(to_write)
 file.close()
 
