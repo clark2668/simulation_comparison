@@ -54,27 +54,6 @@ int main(int argc, char **argv)
 							LQ);
 
 	printf("Size of depth is %d \n", depth.size());
-
-	// IceModel *ice =new IceModel(0 + 1*10, 0 * 1000 + 0 * 100 + 0 * 10 + 0, 0);
-	// double att = ice->GetARAIceAttenuLength(100);
-
-	// vector<double> depths;
-	// vector<double> atts;
-	// for(double depth=0; depth<3000; depth+=10.){
-	// 	depths.push_back(-depth);
-	// 	double att = ice->GetARAIceAttenuLength(depth);
-	// 	atts.push_back(att);
-	// }
-
-	// // save to csv
-	// char title_txt[200];
-	// sprintf(title_txt,"interp_values.txt");
-	// FILE *fout = fopen(title_txt, "a");
-	// for(int i=0; i<depths.size(); i++){
-	// 	fprintf(fout,"%.4f,%.4f\n",depths[i], atts[i]);
-	// }
-	// fclose(fout);//close sigmavsfreq.txt file
-
 	// // make plot
 	TGraph *gr = new TGraph(depth.size(), &depth[0], &Q_shower[0]);
 	TCanvas *c = new TCanvas("","",1100,850);
