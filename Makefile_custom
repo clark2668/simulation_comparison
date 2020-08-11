@@ -1,0 +1,4 @@
+LDFLAGS= -L${shell root-config --libdir} -L${ARASIM_PATH}
+CXXFLAGS= -I${shell root-config --cflags} -I${ARASIM_PATH}
+LDLIBS += $(shell root-config --libs) -lAra #-lRootFftwWrapper
+
